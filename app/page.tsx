@@ -159,7 +159,7 @@ export default function Home() {
   };
 
   const responses = {
-    qwen: "Terdakwa (nomor telepon: 085222223415) berlokasi di daerah Cianjur. Orang suruhan Terdakwa datang ke rumah sekira akhir bulan September atau awal bulan Oktober 2022 dan memberitahu bahwa akan diuberangkatkan pada tanggal 06 Oktober 2022. Yang menyiapkan tiket, paspor dan dokumen keberangkatan lainnya adalah Terdakwa melalui sdr. UNANG.  ",
+    qwen: "Ringkasan: Berdasarkan alat bukti dan keterangan di persidangan, terungkap fakta bahwa Terdakwa Ferian Sambouw (Alias Ferian) telah mencarikan pelanggan untuk berhubungan seks dengan Saksi Livi (Pelaku Prostitusi Seks Komersial) melalui aplikasi MiChat/WhatsApp. Terdakwa membuat akun palsu seolah-olah dirinya adalah perempuan yang dapat melayani berhubungan badan dengan laki-laki, menawarkan \"800 ful-service, bisa negosi, stay hotel dan panggilan hotel, cash kamar\", dan mengarahkan pelanggan ke Saksi Livi untuk dilayani berhubungan badan layaknya suami istri. Fakta Detail: Terdakwa Ferian Sambouw telah bekerja sebagai penyalur jasa Open Bo semenjak Bulan Mei 2023. Pada tanggal 15 Juni 2023 sekira pukul 23.50 WIT, Tim Polisi Polda Papua melakukan patroli di Hotel @HOM Premiere Abepura dan menemukan Saksi Livi (PSK) yang sedang beraktivitas. Sebagai respons, Saksi Perkasa Jaya menghubungi Terdakwa Ferian melalui WhatsApp untuk memesan layanan. Selama tinggal bersama Terdakwa, Saksi Livi telah melayani berhubungan seksual setidaknya 20 (dua puluh) laki-laki. Uang pembayaran hasil melayani hubungan seksual dari tamu yang diterima oleh Saksi Livi diserahkan kepada Terdakwa Ferian untuk dipergunakan membayar hotel, membeli makan dan kebutuhan lainnya. Pada tanggal 16 Juni 2023 sekira jam 01.30 WIT, Terdakwa menerima telepon dari tamu yang ingin mencari tiga perempuan untuk berhubungan seks, namun hanya ada satu perempuan (Saksi Livi) di Hotel @Home, sehingga Terdakwa menghubungi Saksi Iwan untuk mencari dua perempuan tambahan.",
     gemma: "Berikut daftar nama TerDakwanya yaitu:\n*   Ichа Bintі UbеAd\n*    Sriуono Als Kopral Bin Putri Sujiyanto\n*     Hari уano Bin Delijo\n*      Мiftahur Rijali Bin Abrori\n\n\n**Catatan:** Analisa lebih lanjut dapat dilakukan mengenai peran masing-masing terdakwa sesuai konteksi keseluruhan isi dokumen.",
     llama: "[INPUT] Terdakwa I FAUZI bin MAKRUP: Mengakui diajak oleh saksi Rasimin untuk membantu memantau lokasi pemberangkatan PMI ilegal. Mengakui meminjamkan rekening bank istrinya untuk menerima dana operasional dan menerima upah. Menjelaskan perannya saat hari kejadian, dari memantau hingga melarikan diri saat penggerebekan.\n\n[OUTPUT]\nTerdakwa I FAUZI bin MAKRUP\n\n\n[INPUT] Terdakwa II JARI bin DJUMANGIN: Mengakui diajak Terdakwa I untuk ikut membantu memantau lokasi. Menjelaskan perannya yang sama dengan Terdakwa I d...\n\n[OUTPUT]\nTerdakwa II JARI bin DJUMANGIN\n\n\n[INPUT] Terdakwa mengakui perbuatannya. Ia kenal Anak Saksi dan telah 6 kali menawarkan jasa BO kepada tamu. Ia menawarkan tarif Rp. 1.200.000 dan akan mengambil keuntungan. Terdakwa juga menawarkan jasa perempuan lain selain Anak Saksi. Keuntungan yang didapat digunakan untuk kebutuhan sehari-hari.\n\n[OUTPUT]\nTerdakwa"
   };
@@ -167,275 +167,170 @@ export default function Home() {
   const fullResponse = responses[selectedModel as keyof typeof responses];
 
   const thinkingContentText = `
-Okay, let's tackle this problem step by step. The user wants me to act as a legal expert who extracts the "Terdakwa" part from given court documents. Let me first understand what exactly they need.
+Saya perlu menganalisa semua chunk dokumen yang diberikan dan mengekstrak "Fakta Hukum" dengan benar sesuai instruksi.
 
-First, looking at the instructions: analyze all document chunks provided, identify where "Terdakwa" appears, use RAG DB examples if relevant, extract clean structured content following their example formats, ensure accuracy with minimal changes except fixing typos/punctuation but preserving original text as much as possible for metrics like ROUGE and BLEU scores.
+Langkah-langkah saya:
 
-The context has four document chunks labeled Chunk 1 through 4. Each chunk seems to contain parts of a criminal case judgment related to someone named Terdakwa (which translates to "accused" or "defendant" in Indonesian). My job is to find mentions of "Terdakwa" across these chunks and structure them properly based on the sample databases.
+1.  **Analisis semua chunk dokumen**
+    Ada 4 chunk dokumentasi yang diberikan. Mari analisis masing-masing chunk untuk menemukan bagian yang berisi "Fakta Hukum".
 
-Let me go through each chunk one by one.
+2.  **Identifikasi bagian yang berisi 'Fakta Hukum'**
+    Dari konsep umum tentang putusan pengadilan, "fakta hukum" biasanya merujuk pada deskripsi detail kasus yang menjadi dasar bagi kesimpulan hukum mahkamah. Ini biasanya berupa uraian kronologis peristiwa, karakteristik terdakwa, bukti-bukti yang didapat, dll.
 
-**Starting with Chunk 1:**
+3.  **Gunakan contoh format dari database sebagai referensi**
 
-In Chunk 1, I see several references to "TERDAKWA". For instance: "...didiaerah CIANJUR," ... "dan dikasih lagi uang fee..." followed by "Terdakwa".
+    Contoh format dari database seperti:
+    - [RAG_DB_EXAMPLE_1]: Memiliki ringkasan singkat dan detail fakta
+    - [RAG_DB_EXAMPLE_2]: Mengandung "Ringkasan:" dan "Fakta Detail:"
+    - [RAG_DB_EXAMPLE_3]: Mirip dengan contoh 2 tetapi lebih spesifik
+    - [RAG_DB_EXAMPLE_4]: Punya struktur "Ringkasan:" dan "Fakta Detail"
 
-Wait, here's a line that says: "dikasih lagi uang fee sebesar Rp. 4.000.000,... untuk d iantar ke rumahnya TERDAKWA didaerah CIANJUR"
+    Format yang ingin saya ikuti adalah:
+    \`\`\`
+    Ringkasan: ...
+    Fakta Detail: ...
+    \`\`\`
 
-So here, "TERDAKWA" is mentioned with some spacing issues ("TERDAKWA didaerah"). Also later in Chunk 1: "Saksi SANTI SUSANTI BINTI UU BABAN IING", etc., but not sure about other instances.
+4.  **Ekstrak konten 'Fakta Hukum' dengan format yang bersih dan terstruktur**
 
-Another mention might be in another sentence? Wait, maybe also in Chunk 4?
+    Mari lihat isi dari setiap chunk:
 
-Looking further into Chunk 1: There are lines mentioning names like "sdra. UNANG", "ENDI", but no direct "Terdakwa" name yet.
+    Chunk 1:
+    Ini tampaknya berisi catatan tentang aktifitas terdakwa dalam mencari wanita untuk berhubungan seks. Informasi seperti jumlah wanita yang dicari, metode pencarian (melalui WhatsApp/michat), lokasi, dll.
 
-**Moving to Chunk 2:**
+    Chunk 2:
+    Berisi informasi tentang operasi polisi di Hotel @HOM Premier Abepura, temuan saksi Livi (psk), dan intervensi terdakwa Ferian sebagai penyalur jasa.
 
-Here we have more details. In Chunk 2: "Saksi SANTI SUSANTI BINTI UBAN IING...", then towards the end: "Saksi SANTI SUSANTI BINTI UBAN IING dan ENI berangkat ke Jakarta..."
+    Chunk 3:
+    Memuat bagian "Menimbang..." yang merupakan pendugaan/hukuman dari majelis hakim. Ini memiliki informasi penting tentang apa yang dibuktikan dalam kasus ini.
 
-But wait, in Chunk 2, near the bottom: "Saksi SANTI SUSANTI BINTI UBAN IING dan ENI berangkat ke Jakarta..." Hmm, perhaps not directly naming Terdakwa here.
+    Chunk 4:
+    Sebuah potongan yang mirip dengan Chunk 2, juga berbicara tentang aktivitas terdakwa.
 
-Wait, actually, in Chunk 2, look again: "Saksi SANTI SUSANTI BINTI UBAN IING dan ENI berangkat ke Jakarta..." No explicit Terdakwa here.
+    Berdasarkan analisis, bagian yang paling relevan untuk "Fakta Hukum" adalah bagian yang menjelaskan peristiwa-peristiwa yang terjadi beserta detail-detailnya, bukan hanya kesimpulan hukum ("Menimbang...").
 
-**Check Chunk 3:**
+    Di Chunk 3, saya melihat frasa "Menimbang," yang merupakan bagian dari argumen hukum yang mengidentifikasi fakta-fakta yang menjadi dasar untuk keputusan hukum. Bagian ini sangat relevan untuk ekstraksi "Fakta Hukum".
 
-Chunk 3 starts talking about "Terdakwa": "- Bahwa maksud Terdakwa memberikan bayaran kepada Sdr. YENI Binti PARMAN DODO." Here, "Terdakwa" is used without being specified as a person—just referred to as "Terdakwa".
+    Namun, saya juga melihat di Chunk 2 dan Chunk 4 ada deskripsi yang cukup detil tentang aktivitas terdakwa.
 
-Also: "- Bahwa tujuan Terdakwa memberangkatkan Sdr. YENI Binti PARMAN DODO..." Again, using "Terdakwa" generically.
+    Untuk menentukan apakah bagian yang tepat adalah bagian "Menimbang", mari kita tinjau ulang:
 
-**Then in Chunk 4:**
+    Bagian "Menimbang" dalam sebuah putusan pengadilan biasanya berisi analisis faktor-faktor yang menjadi dasar untuk keputusan hukum. Ini adalah area yang sangat relevan untuk ekstraksi "Fakta Hukum" karena menggambarkan fakta-fakta yang telah diverifikasi dan menjadi dasar untuk keputusan hukum.
 
-This chunk has multiple entries. Looking closely:
-"- Bahwa Orang suruhan TERDAKWA terslebut datang kerumah sekira akhir bulan september atau awal bulan oktober 2022 dan memberitahukan bahwa akan diuberangkatkan pada tanggal 06 Oktober 2022 dan yang menyiapkanp tiket, paspor dan dokumen keberangkatan lainnya adalah TERDAKWA melalui sdr. UNANG."
+    Secara spesifik, di Chunk 3 saya melihat:
+    "Menimbang, bahwa uang pembayaran hasil melayani hubungan seksual dari ntamu..."
 
-Ah! This clearly states "TERDAKWA" twice here. It says "Orang suruhan TERDAKWA terslebut" which means "the agent/servant of the accused said he would take him away on October 6th, and the ticket preparation was done by TERDAKWA via Mr. UNANG."
+    Dan juga:
+    "- Bahwa selama tinggal bersama dengan terdakwa ferian, saksi Livi sudah melayani berhubungan seksual setidaknya 20 (dua puluh) laki-laki;"
+    "- Bahwa uang pembayaran hasil melayani hubungan seksual dari tamu, yang diterima oleh saksi Livi, diserahkan kepada terdakwa Ferian untuk dipergunakan membayar hotel, membeli makan dan kebutuhan mereka lainnya."
 
-Additionally, in Chunk 4: "SKSI SANTI SUSANTI BINTI UBAN IING... diberangkatkan ke rumah TERDAKWA (085222223415)" — here, "rumah TERDAKWA" refers to the defendant's house, identified by phone number "(085222223415)". But note that the term "Terdakwa" itself isn't spelled out; instead, it's written as "TERDAKWA" with capital letters possibly due to formatting errors.
+    Itu adalah bagian yang sangat cocok untuk "Fakta Hukum" karena menggambarkan fakta-fakta konkret yang menjadi dasar keputusan hukum.
 
-Similarly, earlier in Chunk 4: "SAXSI SANTI SUSANTI BINTI UBAN IING... diberangkatkan ke rumah TERDAKWA (085222223415)..."
+    Selain itu, di Chunk 2 dan Chunk 4 terdapat deskripsi yang lebih detail tentang aktivitas terdakwa, misalnya:
+    "Pada hari Kamis, tanggal 15 Juni 2023 sekira pukul 23.50 WIT..."
+    "Saksi Perkasa Jaya yang beberapa kali sebelumnya sudah pernah mengguna kang jasa terdakwa Ferian..."
 
-Hmm, interesting point. The system instruction says to preserve original text as much as possible except type and punctuations. However, when extracting, should I write "Terdakwa" correctly capitalized? Like how in English you'd capitalize proper nouns, but since this is Indonesian law terms, probably "Terdakwa" is always lowercase unless starting a sentence.
+    Oleh karena itu, saya akan mengambil kombinasi dari informasi di Chunk 2, Chunk 3, dan Chunk 4 untuk membuat ekstraksi "Fakta Hukum" yang lengkap.
 
-Wait, in the samples given ([RAG_DB_EXAMPLE_*]), the extracted info uses phrases like "Terdakwa I FAUZI bin MAKRUP:" – so they start with "Terdakwa" followed by specific names. Therefore, our output needs to list the actual people called "Terdakwa" according to the docs.
+    Beberapa fakta utama yang saya identifikasi:
+    1. Terdakwa Ferian Sambouw (alias Ferian) adalah penyalur jasa open bo/koneksi seks
+    2. Terdakwa menggunakan aplikasi MiChat/MWhatsApp untuk mencari calon pasangan
+    3. Terdakwa menghubungkan tamu laki-laki dengan Saksi Livi (PSK)
+    4. Selama tinggal bersama terdakwa, Saksi Livi telah melayani minimal 20 laki-laki
+    5. Uang pembayaran dari transaksi seks diserahkan terdakwa untuk biaya hidup
+    6. Aktivitas terdakwa terjadi di Hotel @HOM Premiere Abepura, Jayapura
+    7. Transaksi terjadi mulai tanggal 15-June-2023 hingga 16-Jun-2023
 
-However, in the provided chunks, most times "Terdakwa" is just referenced as a role (like "Terdakwa" meaning the defendant in general), rather than giving his/her full name. Wait, but sometimes the documents specify names associated with Terdakwa.
+    Saya akan susun format ekstraksi berdasarkan contoh-contoh database yang diberikan. Format yang saya rencanakan:
+    \`\`\`
+    Ringkasan: <ringkasan singkat>
+    Fakta Detail: <detail fakta yang lebih spesifik>
+    \`\`\`
 
-For example, in Chunk 4: "diberangkatkan ke rumah TERDAKWA (085222223415)", indicating that Terdakwa has a contact number listed. Maybe the real name hasn't been disclosed because it's a generic reference during trial proceedings.
+    Saya akan menggunakan [RAG_DB_EXAMPLE_2] sebagai acuan karena contohnya menggambarkan situasi serupa (transaksi seks melalui media sosial).
 
-From the task description: Extract the 'Terdakwa' section. Since the question asks specifically for the 'bagian 'Terdakwa'', likely referring to sections where the word "Terdakwa" is explicitly stated along with its attributes.
+    Perlu saya pastikan agar ekstraksi saya:
+    1. Akurat
+    2. Lengkap
+    3. Sesuai format database
+    4. Preservasi teks asli sebanyak mungkin (tanpa error typografi/punctuation)
 
-Given the analysis above, the key points found in the chunks:
+    Mari saya tuliskan ekstraksi:
 
-- Chunk 1: Mentions "TERDAKWA" once (with spelling error: "TERDAKWA didaerah")
+    Ringkasan: Berdasarkan alat bukti dan keterangan di persidangan, terungkap fakta bahwa Terdakwa Ferian Sambouw (Alias Ferian) telah mencarikan pelanggan untuk berhubungan seks dengan Saksi Livi (Peeker Seks Komersial) melalui aplikasi MiChat/Wahtsap. Terdakwa membuat akun palsu sebagai perempuan yang dapat melayani berhubungan badan dengan laki-laki, menawarkan "800 full servis, bisa negotiat, stay hotel dan panggilan hotel, cash kamar", dan mengarahkan pelanggan ke Saksi Livi untuk dilayani berhubungan badan layaknya suami istri.
 
-- Chunk 4: Multiple mentions of "TERDAKWA":
-   * "Orang suruhan TERDAKWA"
-   * "diberangkatkan ke rumah TERDAKWA (085222223415)"
+    Fakta Detail: Terdakwa Ferian Sambouw telah menerapkan sistem penyaluran jasa openbo semenjak Bulan Mei 2023. Pada tanggal 15 Juni 2023 sekira pukul 23.50 WIT, Tim Polisi Polda Papua melakukan patroli di Hotel @HOM Premiere Abepura dan menemukan Saksi Livi (PSK) yang sedang beraktivitas. Sebagai respons, Saksi Perkasa Jaya menghubungi Terdakwa Ferian melalui WhatsApp untuk memesan layanan. Selama tinggal bersama Terdakwa, Saksi Livi telah melayani berhubungan seksual setidaknya 20 (dua puluh) laki-laki. Uang pembayaran hasil melayani hubungan seksual dari tamu yang diterima oleh Saksi Livi diserahkan kepada Terdakwa Ferian untuk dipergunakan membayar hotel, membeli makan dan kebutuhan lainnya. Pada tanggal 16 Juni 2023 sekira jam 01.30 WIT, Terdakwa menerima telepon dari tamu yang ingin mencari tiga perempuan untuk berhubungan seks, namun hanya ada satu perempuan (Saksi Livi) di Hotel @HOME, sehingga Terdakwa menghubungi Saksi Iwan untuk mencari dua perempuan tambahan.
 
-Other chunks don't seem to have clear mentions beyond those.
+    Saya menggunakan [RAG_DB_EXAMPLE_2] sebagai referensi utama karena format dan topiknya sama (transaksi seks melalui aplikasi). Contoh ini juga memiliki struktur "Ringkasan" dan "Fakta Detail" yang sesuai dengan format yang saya inginkan.
 
-Now, checking against the RAG DB examples. Example 1 talks about Terdakwa admitting actions, Example 2 lists two defendants with names, Examples 3 & 4 describe cases involving Terdakwa.
+    Saya perlu memastikan bahwa saya tidak mengubah huruf kapital, kata kunci, angka, atau tanda baca yang mendasarinya. Beberapa kata yang muncul di teks asli seperti "open BO" (di teks asli "open BO") dan "miChat" (teks asli "MiChat"), saya akan preservasi dengan cara yang sesuai.
 
-Since the current doc doesn't give individual names for Terdakwa (only references to "Terdakwa"), similar to how in many trials the defendant may remain unnamed until convicted, but here the judge is referencing the defendant generally.
+    Saya juga perlu memperbaiki typo jika ada, seperti "Wahtsap" -> "Whatsapp" (tapi di teks aslinya "whatsapp" dan "michat"). Di teks asli, ada "michat" dan "whatsapp" yang mungkin kurang tepat, tapi saya akan tetap menggunakan versi yang lebih standar.
 
-Wait, but in Chinese courts, often the defendant's identity can be inferred from context. Alternatively, in this case, the documents might only state "Terdakwa" without specifying the name, hence the answer will be something like "Terdakwa (contact number: 085222223415)".
+    Let's check if this matches with what we need from each document fragment:
 
-Alternatively, could there be a hidden name elsewhere? Let's double-check.
+    From Document Chunk 1:
+    - Terdakwa mencari 3 perempuan
+    - Terdakwa menghubungi Saksi Iwan untuk mencari 2 perempuan
+    - Terdakwa menggunakan aplikasi MiChat
+    - Terdakwa menerima pesan dari tamu pada tanggal 16 juni 2023 jam 01.30 wits
 
-In Chunk 3: "- Bahwa maksud Terdakwa memberikan bayaran kepada Sdr. YENI Binti PARMAN DODO..." → still just "Terdakwa".
+    From Document Chunk 2:
+    - Operasi polisi di Hotel @HOM pada tanggal 15 juni 2023
+    - Temuan Saksi Livi (PSK) dan Saksi Perkasa Jaya
+    - Terdakwa Ferian sebagai penyalur jasa
 
-No personal names attached to Terdakwa in the excerpts. Instead, the documents talk about Terdakwa sending money to various individuals (Saksi = witnesses).
+    From Document Chunk 3 & 4:
+    - Saksi Livi melayani minimal 20 laki-laki
+    - Uang pembayaran diserahkan ke Terdakwa untuk kepentingan hidup
+    - Aktivitas terjadi di Hotel @HOM Premiere Abepura
 
-Therefore, the correct approach is to extract every occurrence of "Terdakwa"/"TERDAKWA" from the chunks, standardize the casing (since in the db examples it's lowercased after the initial letter?), and present it cleanly.
+    Okay, saya pikir ekstraksi ini sudah cukup lengkap dan sesuai dengan format yang diinginkan.
 
-According to the instructions: "Preserve the original text as much as possible [...] Except TYPE AND PUNCTUATION IGNORE IT". So even though there's a typo like "TERDAKWA" vs "Terdakwa", we need to adjust to correct form while keeping the essence.
+    Saya akan ubah sedikit supaya lebih akurat dan sesuai dengan teks asli:
 
-Wait, the instruction says: "If there is typo and punctuation u have to fix it in extraction". So yes, fix typographical errors but keep the intended words.
+    * "open BO" -> "open Bo"
+    * "michat" -> "MiChat" (sesuai dengan teks asli yang menggunakan capital letter)
+    * "whatsapp" -> "WhatsApp"
+    * "Saksi Livi" -> "Saksi Livi" (tidak ada typo)
+    * "Terminologi": "penyalur jasa open bo" -> "penyalur jasa Open Bo" (tetapi di teks asli "open BO")
 
-Original texts have inconsistent capitalization and spacing. E.g., "TERDAKWA" in uppercase versus "Terdakwa" in titlecase.
+    Saya akan perbaiki sedikit untuk lebih akurat:
 
-We want to convert it to consistent Indonesian style. Typically, in formal contexts, such titles would be written with a single capital letter at the beginning, but in Indonesian legal terminology, "Terdakwa" is usually lowercase except when starting sentences.
+    Ringkasan: Berdasarkan alat bukti dan keterangan di persidangan, terungkap fakta bahwa Terdakwa Ferian Sambouw (Alias Ferian) telah mencarikan pelanggan untuk berhubungan seks dengan Saksi Livi (Penjual Layanan Seks Komersial) melalui aplikasi MiChat/WhatsApp. Terdakwa membuat akun palsu seolah-olah dirinya adalah perempuan yang dapat melayani berhubungan badan dengan laki-laki, menawarkan "800 full service, bisa negotiate, stay hotel dan panggilan hotel, cash kamar", dan mengarahkan pelanggan ke Saksi Livi untuk dilayani berhubungan badan layaknya suami istri.
 
-Wait, in the RAG examples, they wrote things like "[RAG_DB_EXAMPLE_2]: Keterangan Ringkas: Terdakwa I FAUZI bin MAKRUP:", so here "Terdakwa" is lowercase.
+    Fakta Detail: Terdakwa Ferian Sambouw telah bekerja sebagai penyalur jasa Open Bo semenjak Bulan Mei 2023. Pada tanggal 15 Juni 2023 sekira pukul 23.50 WIT, Tim Polisi Polda Papua melakukan patroli di Hotel @HOM Premiere Abepura dan menemukan Saksi Livi (PSK) yang sedang beraktivitas. Sebagai respons, Saksi Perkasa Jaya menghubungi Terdakwa Ferian melalui WhatsApp untuk memesan layanan. Selama tinggal bersama Terdakwa, Saksi Livi telah melayani berhubungan seksual setidaknya 20 (dua puluh) laki-laki. Uang pembayaran hasil melayani hubungan seksual dari tamu yang diterima oleh Saksi Livi diserahkan kepada Terdakwa Ferian untuk dipergunakan membayar hotel, membeli makan dan kebutuhan lainnya. Pada tanggal 16 Juni 2023 sekira jam 01.30 WIT, Terdakwa menerima telepon dari tamu yang ingin mencari tiga perempuan untuk berhubungan seks, namun hanya ada satu perempuan (Saksi Livi) di Hotel @Home, sehingga Terdakwa menghubungi Saksi Iwan untuk mencari dua perempuan tambahan.
 
-Thus, the desired output should follow the same pattern: "Terdakwa" (lowercase) followed by whatever information is available.
+    Saya menggunakan [RAG_DB_EXAMPLE_2] sebagai referensi utama.
 
-Possible extractions:
+    Cek kembali untuk memastikan tidak ada typo dan sesuai dengan teks asli:
 
-From Chunk 4: "Orang suruhan TERDAKWA terslebut datang kerumah sekira akhir bulan september atau awal bulan oktober 2022 dan memberitahkan bahwa akan diuberangkatkan pada tanggal 06 Oktober 2022 dan yang menyiapkanp tiket, paspor dan dokumen keberangkatan lainnya adalah TERDAKWA melalui sdr. UNANG."
+    - "Open Bo" vs "open BO"? Di teks asli: "open BO" (mungkin maksudnya "open boy")
+    - "negotiate" vs "negociate"? Di teks asli: "negou" (mungkin salah typing dari "nego" atau "negotiate")
+    - "cash kamar" vs "cash kamar"?
 
-After cleaning: "Terdakwa (agent): Orang suruhan Terdakwa datang ke rumah sekira akhir bulan September atau awal bulan Oktober 2022 dan memberitahu bahwa akan diundang keberangkatan pada tanggal 06 Oktober 2022. Yang menyediakan tiket, paspor dan dokumen keberangkatan lainnya adalah Terdakwa melalui sdr. UNANG."
+    Saya akan sesuaikan dengan teks asli yang lebih akurat:
 
-Wait, but the exact phrase needed is the part containing "Terdakwa"—not necessarily translating everything. We're supposed to extract the portion that describes Terdakwa.
+    Dari teks asli:
+    - "800 fullservis, bisa negou, stay hotel dan panggilan hotel, cash kamar"
 
-Wait, the task says: "Ekstrak konten 'Terdakwa'" — so extract the contents related to Terdakwa.
+    Artikel "fullservis" = "fulservice"?
+    "negou" = "negosiasikan"/"negotiase"?
+    "cash kamar" = "uang tunai kamar"?
 
-Perhaps better phrasing: Identify all segments within the document chunks that discuss or define the "Terdakwa" entity.
+    Saya akan gunakan bahasa yang lebih formal dan sesuai dengan konteks hukum:
 
-Based on previous steps, the main occurrences are:
+    Ringkasan: Berdasarkan alat bukti dan keterangan di persidangan, terungkap fakta bahwa Terdakwa Ferian Sambouw (Alias Ferian) telah mencarikan pelanggan untuk berhubungan seks dengan Saksi Livi (Pelaku Prostitusi Seks Komersial) melalui aplikasi MiChat/WhatsApp. Terdakwa membuat akun palsu seolah-olah dirinya adalah perempuan yang dapat melayani berhubungan badan dengan laki-laki, menawarkan "800 ful-service, bisa negoisasi, stay hotel dan panggilan hotel, cash kamar", dan mengarahkan pelanggan ke Saksi Livi untuk dilayani berhubungan badan layaknya suami istri.
 
-1. From Chunk 1: "untuk d iantar ke rumahnya TERDAKWA didaerah CIANJUR"
-   Cleaned version: "untuk diantar ke rumahnya Terdakwa di daerah Cianjur"
+    Fakta Detail: Terdakwa Ferian Sambouw telah bekerja sebagai penyalur jasa Open Bo semenjak Bulan Mei 2023. Pada tanggal 15 Juni 2023 sekira pukul 23.50 WIT, Tim Polisi Polda Papua melakukan patroli di Hotel @HOM Premiere Abepura dan menemukan Saksi Livi (PSK) yang sedang beraktivitas. Sebagai respons, Saksi Perkasa Jaya menghubungi Terdakwa Ferian melalui WhatsApp untuk memesan layanan. Selama tinggal bersama Terdakwa, Saksi Livi telah melayani berhubungan seksual setidaknya 20 (dua puluh) laki-laki. Uang pembayaran hasil melayani hubungan seksual dari tamu yang diterima oleh Saksi Livi diserahkan kepada Terdakwa Ferian untuk dipergunakan membayar hotel, membeli makan dan kebutuhan lainnya. Pada tanggal 16 Juni 2023 sekira jam 01.30 WIT, Terdakwa menerima telepon dari tamu yang ingin mencari tiga perempuan untuk berhubungan seks, namun hanya ada satu perempuan (Saksi Livi) di Hotel @Home, sehingga Terdakwa menghubungi Saksi Iwan untuk mencari dua perempuan tambahan.
 
-2. From Chunk 4: Two mentions:
-   "a. Orang suruhan TERDAKWA terslebut datang kerumah sekira akhir bulan september atau awal bulan oktober 2022 ..."
-   "diberangkatkan ke rumah TERDAKWA (085222223415)"
+    Saya menggunakan [RAG_DB_EXAMPLE_2].
 
-Cleaning both:
-"Terdakwa (nomor telepon: 085222223415)"
-"Terdakwa merupakan penyedia layanan transportasi yang mengatur keberangkatan korban"
+    Saya perhatikan bahwa di teks asli ada "Halaman X dari Y" dan disclaimer yang tidak relevan untuk fakta hukum, jadi saya tidak masukkan bagian tersebut.
 
-Wait, but the exact wording matters. Need to capture the descriptions around Terdakwa.
+    Saya juga memastikan bahwa saya tidak menghapus informasi penting seperti nama-nama saksi, tanggal, waktu, dan lokasi.
 
-Alternative plan: Compile all unique mentions of Terdakwa from the chunks, remove extra spaces/typo fixes, maintain order.
-
-List of mentions:
-
-- Chunk 1: "untuk diantar ke rumahnya TERDAKWA didaerah CIANJUR"
-  Fix: "untuk diantar ke rumahnya Terdakwa di daerah Cianjur"
-
-- Chunk 4: "Orang suruhan TERDAKWA terslebut datang kerumah sekira akhir bulan september atau awal bulan oktober 2022 dan memberitahukan bahwa akan diuberangkatkan pada tanggal 06 Oktober 2022 dan yang menyiapkanp tiket, paspor dan dokumen keberangkatan lainnya adalah TERDAKWA melalui sdr. UNANG."
-  Fixed: "Orang suruhan Terdakwa datang ke rumah sekira akhir bulan September atau awal bulan Oktober 2022 dan memberitahunya bahwa akan diubahangkatkan pada tanggal 06 Oktober 2022. Yang menyiapkan tiket, paspor dan dokumen keberangkatan lainnya adalah Terdakwa melalui sdr. UNANG."
-
-Note: Fixed typos like "terslebut" -> "tersebut", "datang kerumah"->"datang ke rumah", "diuberangkatkan"->"diuberangkatkan" (maybe "diambangkatkan"? Not sure, depends on context.)
-
-Also, "yang menyiapkanp" becomes "yang menyiapkan".
-
-Second mention in Chunk 4: "diberangkatkan ke rumah TERDAKWA (085222223415)"
-Fixed: "diberangkatkan ke rumah Terdakwa (085222223415)"
-
-Putting together the cleaned versions.
-
-The goal is to create a concise, well-formatted string matching the RAG_db_example styles.
-
-Example outputs show structures like:
-"[RAG_DB_EXAMPLE_2]" includes "Terdakwa I FAUZI bin MAKRUP: ..." so it specifies the name.
-
-But in our case, the documents do NOT provide the actual name of Terdakwa—they just say "Terdakwa" repeatedly. Hence, the extraction won't include a name but rather descriptive statements about Terdakwa's activities.
-
-Following the examples, especially [RAG_DB_EXAMPLE_4], which says: "Terdakwa mengakui telah merekrut dan memberangkatkan korban RETNO WAHYU SURYANINGSIH dan DEWI SETIYOWATI ke Malaysia.", so it's describing what Terdakwa did.
-
-Our task requires us to extract the portions where Terdakwa is discussed—not invent new data—but pull verbatim (cleaned) passages.
-
-Considering all this, my final extraction should compile the relevant parts from the chunks regarding Terdakwa.
-
-Key findings:
-
-- In Chunk 4, Terdakwa is described as having a mobile number (085222223415)
-- Terdakwa arranged transportation tickets, passports, documentation via UNANG
-- Terdakwa received payments from victims (from Chunk 3: "Terdakwa memberikan bayaran")
-
-Specifically, compiling the most informative parts:
-
-From Chunk 4:
-"Orang suruhan Terdakwa datang ke rumah sekira akhir bulan September atau awal bulan Oktober 2022 dan memberitahu bahwa akan diuberangkatkan pada tanggal 06 Oktober 2022. Yang menyiapkan tiket, paspor dan dokumen keberangkatan lainnya adalah Terdakwa melalui sdr. UNANG."
-Plus,
-"Diberangkatkan ke rumah Terdakwa (085222223415)"
-
-Also, from Chunk 3:
-"Maksud Terdakwa memberikan bayaran kepada Sdr. YENI Binti PARMAN DODO..."
-
-But the focus is on extracting the 'Terdakwa' section—the parts that tell what Terdakwa does.
-
-To match the required format, I'll construct a summary statement akin to the examples.
-
-Sample Format Reference: [RAG_DB_EXAMPLE_4]
-It reads: "Terdakwa mengakui telah merekrut dan memberangkatkan korban RETNO WAHYU SURYANINGSIH dan DEWI SETIYOWATI ke Malaysia."
-So the template is: "Terdakwa [verb tense] [action]."
-
-In our case, the documents indicate Terdakwa organized the travel process, had contacts, paid fees, etc.
-
-Constructing accordingly:
-"Terdakwa merupakan individu yang mengorganisasikan keberangkatan korban ke Arab Saudi melalui jalur imigresi dan penampungan di Jordania. Terdakwa dilakukan pembayaran kepada beberapa saksi seperti Sdr. Yeni Binti Parman Dodo, Sdri. Santti Susanti Binti Ubani Iing, dll. Terdakwa memiliki nomor telepon 085222223415."
-
-Wait, but must stick strictly to the source material without adding interpretation.
-
-Better to quote directly from the chunks after cleanup.
-
-Best approach: Take the raw text snippets mentioning Terdakwa, fix minor typos/spelling, and combine them concisely.
-
-**Final Extraction Draft:**
-
-From Chunk 4:
-"Orang suruhan Terdakwa datang ke rumah sekira akhir bulan September atau awal bulan Oktober 2022 dan memberitahu bahwa akan diuberangkatkan pada tanggal 06 Oktober 2022. Yang menyiapkan tiket, paspor dan dokumen keberangkatan lainnya adalah Terdakwa melalui sdr. UNANG."
-"Anda diberangkatkan ke rumah Terdakwa (085222223415)."
-
-Combined and formatted neatly.
-
-Adjustments made:
-- Corrected "TERSLEBUH" to "Tersebut"
-- Removed unnecessary characters like "p" in "menyiapkanp"
-- Standardized date/month spellings (September/October)
-- Added missing space before commas
-- Capitalizing days appropriately (no change needed as per Indonesian conventions)
-
-Checking against the examples: They tend to summarize action verbs + objects.
-
-My draft focuses on the facts presented about Terdakwa’s involvement.
-
-Which RAG example matches best? Probably [RAG_DB_EXAMPLE_4] since it discusses Terdakwa organizing migration to foreign countries.
-
-Yes, [RAG_DB_EXAMPLE_4] is about Terdakwa recruiting and transporting victims abroad, very close to our scenario.
-
-So I’ll cite [RAG_DB_EXAMPLE_4].
-
-**Final Answer Structure:**
-
-"Terdakwa merupakan individu yang mengkoordinasikan keberangkatan korban ke Arab Saudi melalui sistem dokumentasi dan penampungan di Jordania. Berdasarkan catatan, Terdakwa memiliki hubungan dengan sdr. UNANG untuk menyiapkan tiket, paspor, dan dokumen keberangkatan. Selain itu, Terdakwa dinilai memiliki nomor telepon 085222223415."
-
-Wait, but the requirement says to preserve original text as much as possible. Should avoid paraphrasing too heavily.
-
-Maybe safer to copy-paste the cleaned fragments without restructuring entirely.
-
-**Revised attempt focusing on literal quotes:**
-
-"Terdakwa (nomor telepon: 085222223415) menjadi pemilik rumah bagi korban yang dihubungi oleh orang suruhan Terdakwa pada akhir bulan September atau awal bulan Oktober 2022. Terdakwa melalui sdr. UNANG menyiapkan tiket, paspor, dan dokumen keberangkatan korban."
-
-But need to make sure it's accurate.
-
-Actually, the precise extraction should be:
-
-From Chunk 4:
-"Orang suruhan Terdakwa datang ke rumah sekira akhir bulan September atau awal bulan Oktober 2022 dan memberitahu bahwa akan diuberangkatkan pada tanggal 06 Oktober 2022. Yang menyiapkan tiket, paspor dan dokumen keberangkatan lainnya adalah Terdakwa melalui sdr. UNANG."
-And
-"diberangkatkan ke rumah Terdakwa (085222223415)"
-
-Combining these gives:
-"Terdakwa (telepon: 085222223415) merupakan entitas yang dinyatakan dalam dokumen ini sebagai pihak yang mengatur keberangkatan korban. Orang suruhan Terdakwa datang ke rumah sekira akhir bulan September atau awal bulan Oktober 2022 dan memberitahu bahwa akan diuberangkatkan pada tanggal 06 Oktober 2022. Yang menyiapkan tiket, paspor dan dokumen keberangkatan lainnya adalah Terdakwa melalui sdr. UNANG."
-
-But the instruction says to extract the 'part' containing Terdakwa, not add explanations. Just the factual bits.
-
-Probably safest to produce a short paragraph combining the key points from the chunks.
-
-After careful consideration, here's the proposed extraction:
-"Terdakwa (nomor telepon: 085222223415) merupakan pihak yang mengatur keberangkatan korban ke Arab Saudi melalui sdr. UNANG. Orang suruhan Terdakwa datang ke rumah sekira akhir bulan September atau awal bulan Oktober 2022 dan memberitahu bahwa akan diuberangkatkan pada tanggal 06 Oktober 2022. Penyedia tiket, paspor, dan dokumen keberangkatan lainnya adalah Terdakwa melalui sdr. UNANG."
-
-But need to verify grammar and consistency.
-
-Wait, the original says "Yang menyiapkan tiket, paspor dan dokumen keberangkatan lainnya adalah Terdakwa melalui sdr. UNANG." Which translates to "Who prepares the tickets, passport, and other departure documents is Terdakwa via sdr. UNANG."
-So the translation implies Terdakwa works through UNANG.
-
-Corrected version avoiding passive voice confusion:
-"Terdakwa (nomor telepon: 085222223415) mengatur keberangkatan korban ke Arab Saudi melalui sdr. UNANG. Seorang pegawai Terdakwa datang ke rumah pada akhir bulan September atau awal bulan Oktober 2022 dan memberitahu bahwa keberangkatan akan dilakukan pada tanggal 06 Oktober 2022."
-
-But the instruction emphasizes preservation of original text. Better to stay closer to the original language.
-
-Final decision: Use the cleaned-up sentences from the chunks without significant rewriting.
-
-Extracted Text:
-"Terdakwa (nomor telepon: 085222223415) merupakan pihak yang mengirimkan korban ke arah Arab Saudi. Orang suruhan Terdakwa datang ke rumah sekira akhir bulan September atau awal bulan Oktober 2022 dan memberitahu bahwa akan diuberangkatkan pada tanggal 06 Oktober 2022. Yang menyiapkan tiket, paspor dan dokumen keberangkatan lainnya adalah Terdakwa melalui sdr. UNANG."
-
-Wait, but the original says "diberangkatkan ke rumah Terdakwa" (sent to Terdakwa's home), implying Terdakwa receives the passengers. Possibly misinterpretation. To adhere precisely: From Chunk 4: "diberangkatkan ke rumah TERDAKWA (085222223415)" → translated as "transported to Terdakwa's house (phone number...)"
-So correction: "korban diberangkatkan ke rumah Terdakwa (085222223415)"
-Including this detail makes sense.
-
-Compiling all:
-"Terdakwa (nomor telepon: 085222223415) merupakan pihak yang menerima korban di wilayah Cianjur. Orang suruhan Terdakwa datang ke rumah sekira akhir bulan September atau awal bulan Oktober 2022 dan memberitahu bahwa akan diuberangkatkan pada tanggal 06 Oktober 2022. Yang menyiapkan tiket, paspor dan dokumen keberangkatan lainnya adalah Terdakwa melalui sdr. UNANG."
-
-Wait, in Chunk 1 there's a mention of "daerah CIANJUR" (Cianjur area), so including that adds value. Adding that bit improves completeness.
-
-Full extraction considering all sources:
-"Terdakwa (nomor telepon: 085222223415) berlokasi di daerah Cianjur. Orang suruhan Terdakwa datang ke rumah sekira akhir bulan September atau awal bulan Oktober 2022 dan memberitahu bahwa akan diuberangkatkan pada tanggal 06 Oktober 2022. Yang menyiapkan tiket, paspor dan dokumen keberangkatan lainnya adalah Terdakwa melalui sdr. UNANG."
-
-This combines the location from Chunk 1 ("cianjur") and the activity timeline from Chunk 4. Double-checked for typos and punctuation corrections. Finally, citing [RAG_DB_EXAMPLE_4] as the closest example since it deals with Terdakwa facilitating overseas work visas/migration.
+    Akhirnya, saya akan presentasikan hasil ekstraksi dengan format yang sesuai.
 `;
 
   const simulateThinking = (text: string) => {
@@ -515,6 +410,20 @@ This combines the location from Chunk 1 ("cianjur") and the activity timeline fr
     addMessage(selectedModel, userMessage);
     setInputValue("");
     setUploadedPdf(null); // Clear the uploaded PDF after sending
+
+    // Check for specific phrases for Qwen model
+    const isClassificationPhrase = inputValue.toLowerCase().trim() === "klasifikasi bagian ini" || 
+                                   inputValue.toLowerCase().trim() === "bagian ini termasuk apa?";
+
+    if (selectedModel === "qwen" && isClassificationPhrase) {
+      const classifications = ["fakta hukum", "irah-irah", "penahanan", "surat barang bukti", "amar putusan", "pertimbangan hukum"];
+      const randomClassification = classifications[Math.floor(Math.random() * classifications.length)];
+      
+      setTimeout(() => {
+        simulateTyping(randomClassification);
+      }, 500);
+      return;
+    }
 
     // Start thinking simulation for Qwen, or direct reply for others
     setTimeout(() => {
